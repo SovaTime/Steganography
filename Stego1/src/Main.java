@@ -12,13 +12,14 @@ public class Main {
 
             encryption(startImg, binaryMessage);
 
+            BufferedImage endImg = ImageIO.read(new File("encryptIMG_2586"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static String getMessage(){
-        String message = null;
+        String message;
 
         try (BufferedReader reader = new BufferedReader(new FileReader("message.txt"))) {
             StringBuilder content = new StringBuilder();
@@ -74,7 +75,11 @@ public class Main {
         }
 
 
-        File outputImg = new File("encryptIMG_2585.JPG");
+        File outputImg = new File("encryptIMG_2586.JPG");
         ImageIO.write(encryptImg, "JPG", outputImg);
+    }
+
+    public static void decryption (){
+
     }
 }
