@@ -1,7 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.*;
 
 public class Main {
@@ -11,16 +10,8 @@ public class Main {
             String message = getMessage();
             String binaryMessage = toBinary(message);
 
-            byte[] pixels = ((DataBufferByte) startImg.getRaster().getDataBuffer()).getData();
-            int width = startImg.getWidth();
-            int height = startImg.getHeight();
+            encryption(startImg, binaryMessage);
 
-            for (int y = 0; y<height; y++){
-                for (int x = 0; x < width; x++){
-                    Color color = new Color(startImg.getRGB(x, y));
-                    
-                }
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,5 +43,38 @@ public class Main {
             }
 
         return binMessage.toString();
+    }
+
+    public static void encryption (BufferedImage sttImg, String binaryMess) throws IOException {
+        BufferedImage encryptImg = sttImg;
+        // byte[] pixels = ((DataBufferByte) encryptImg.getRaster().getDataBuffer()).getData();
+        int width = encryptImg.getWidth();
+        int height = encryptImg.getHeight();
+        int i = -1;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                while (i < binaryMess.length() - 1){
+                    i++;
+                    Color color = new Color(encryptImg.getRGB(x, y));
+                    int red;
+                    int green = color.getGreen();
+                    int blue = color.getBlue();
+                    if (binaryMess.charAt(i) == '1') {
+                        red = color.getRed() | 1; //если 1
+                    } else {
+                        red = color.getRed() & ~1; //если 0
+                    }
+
+                    Color newColor = new Color(red, green, blue);
+
+                    encryptImg.setRGB(x, y, newColor.getRGB());
+                }
+            }
+        }
+
+
+        File outputImg = new File("encryptIMG_2585.JPG");
+        ImageIO.write(encryptImg, "JPG", outputImg);
     }
 }

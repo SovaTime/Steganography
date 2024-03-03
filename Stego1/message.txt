@@ -1,2 +1,0 @@
-The LSB method. LSB (Least Significant Bit, least significant bit) — the essence of this method is to replace the last significant bits in the container (images, audio or video recordings) with the bits of the hidden message.
-The difference between empty and filled containers should not be perceptible to human senses.
